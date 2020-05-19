@@ -17,12 +17,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder> {
 
     Context context;
-    ArrayList<Profile> profiles;
+    ArrayList<Profile2> profiles;
 
-    public MyAdapter(Context c,ArrayList<Profile> p){
+    public MyAdapter2(Context c,ArrayList<Profile2> p){
         context=c;
         profiles=p;
     }
@@ -30,14 +30,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.cardview,parent,false));
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.cardview2,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.name.setText(profiles.get(position).getName());
-        holder.email.setText(profiles.get(position).getEmail());
-        Picasso.with(context).load(profiles.get(position).getProfilePic()).into(holder.profilePic);
+        if(profiles.get(position).getadded()) {
+            holder.name.setText(profiles.get(position).getName());
+            holder.email.setText(profiles.get(position).getEmail());
+            Picasso.with(context).load(profiles.get(position).getProfilePic()).into(holder.profilePic);
+        }
+        /*else{
+            holder.btn.setVisibility(View.INVISIBLE);
+            holder.item.setVisibility(View.INVISIBLE);
+            holder.price.setVisibility(View.INVISIBLE);
+        }*/
         // holder.btn.setVisibility(View.VISIBLE);
         //holder.onClick(position);
         String s1=profiles.get(position).getName();
@@ -56,16 +63,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        TextView name,email;
+        TextView name,email,item,price;
         ImageView profilePic;
         Button btn;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name=(TextView)itemView.findViewById(R.id.name);
-            email=(TextView)itemView.findViewById(R.id.email);
-            profilePic=(ImageView)itemView.findViewById(R.id.profilePic);
-            btn=(Button)itemView.findViewById(R.id.checkDetails);
+            name=(TextView)itemView.findViewById(R.id.name2);
+            email=(TextView)itemView.findViewById(R.id.email2);
+            profilePic=(ImageView)itemView.findViewById(R.id.profilePic2);
+            btn=(Button)itemView.findViewById(R.id.checkDetails2);
+            item=(TextView)itemView.findViewById(R.id.itemtextview);
+            price=(TextView)itemView.findViewById(R.id.pricetextview);
+
         }
 
         /*public void onClick(final int position)
@@ -85,8 +95,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     Toast.makeText(context,orderedfoodname+" SELECTED",Toast.LENGTH_SHORT).show();
 
                     Intent intent=new Intent(context,Main2Activity.class);
-                    //intent.putExtra("foodname",orderedfoodname);
-                    //intent.putExtra("costprice",costprice);
+                    intent.putExtra("foodname",orderedfoodname);
+                    intent.putExtra("costprice",costprice);
                     context.startActivity(intent);
 
 
